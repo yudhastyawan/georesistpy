@@ -3,8 +3,9 @@ GeoResistPy application entry point.
 
 Usage
 -----
-    python -m georesistpy.app          # launch the web UI
-    georesistpy                        # same, via console_scripts entry point
+    georesistpy                        # CLI shortcut via console_scripts
+    python -m georesistpy              # same, via __main__.py
+    panel serve georesistpy/serve.py   # Panel-native serving
 
 The Panel server starts on http://localhost:5006 by default.
 """
@@ -29,14 +30,13 @@ def main(port: int = 5006, show: bool = True) -> None:
     from georesistpy.ui.app import build_app
 
     template = build_app()
-    template.servable()
 
     pn.serve(
         {"/": template},
         port=port,
         address="127.0.0.1",
         show=show,
-        title="GeoResistPy",
+        title="GeoResistPy — ERT Processing Suite",
         websocket_origin="*",
     )
 

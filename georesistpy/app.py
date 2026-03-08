@@ -4,50 +4,49 @@ GeoResistPy application entry point.
 Usage
 -----
     georesistpy                        # CLI shortcut via console_scripts
+    georesistpy --port 8080            # custom port
+    georesistpy --no-show              # don't open browser
     python -m georesistpy              # same, via __main__.py
-    panel serve georesistpy/serve.py   # Panel-native serving
 
 The Panel server starts on http://localhost:5006 by default.
 """
 
 from __future__ import annotations
 
+import argparse
 import sys
 
 
-def main(port: int = 5006, show: bool = True) -> None:
-    """Launch the GeoResistPy Panel web application.
+def main() -> None:
+    """Launch the GeoResistPy Panel web application."""
+    parser = argparse.ArgumentParser(
+        prog="georesistpy",
+        description="GeoResistPy — ERT Processing Suite",
+    )
+    parser.add_argument(
+        "--port", type=int, default=5006,
+        help="TCP port to bind (default: 5006)",
+    )
+    parser.add_argument(
+        "--no-show", action="store_true", default=False,
+        help="Do not open a browser window automatically",
+    )
+    args = parser.parse_args()
 
-    Parameters
-    ----------
-    port : int
-        TCP port to bind (default 5006).
-    show : bool
-        Open a browser window automatically (default True).
-    """
     import panel as pn
-
     from georesistpy.ui.app import build_app
 
     template = build_app()
 
     pn.serve(
         {"/": template},
-        port=port,
+        port=args.port,
         address="127.0.0.1",
-        show=show,
+        show=not args.no_show,
         title="GeoResistPy — ERT Processing Suite",
         websocket_origin="*",
     )
 
 
 if __name__ == "__main__":
-    # Allow optional --port and --no-show flags
-    port = 5006
-    show = True
-    for i, arg in enumerate(sys.argv[1:], 1):
-        if arg == "--port" and i < len(sys.argv):
-            port = int(sys.argv[i + 1])
-        if arg in ("--no-show", "--noshow"):
-            show = False
-    main(port=port, show=show)
+    main()

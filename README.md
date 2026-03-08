@@ -26,16 +26,26 @@ web UI.
 
 ## Quick Start
 
+### 1. Installation
+
+The easiest way to install GeoResistPy with the Web UI is via PyPI:
 ```bash
-# Install (editable, with all extras)
-pip install -e ".[all]"
+pip install "georesistpy[ui]"
+```
 
-# pygimli must come from conda-forge
-conda install -c conda-forge pygimli
+*Note: For complete 2D inversion capabilities, ensure you have the required dependencies (such as SimPEG and discretize).*
 
-# Launch the web UI
-python -m georesistpy.app
-# → opens http://localhost:5006
+### 2. Launching the Web UI
+
+After installation, you can launch the interactive dashboard directly from your terminal:
+```bash
+georesistpy
+```
+
+Optional arguments:
+```bash
+georesistpy --port 8080      # run on a custom port instead of default 5006
+georesistpy --no-show        # start the server without automatically opening a browser tab
 ```
 
 ## Package Layout

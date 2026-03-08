@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "georesistpy"
-version = "0.2.1"
+version = "0.2.2"
 description = "Python library for Electrical Resistivity Tomography (ERT) data processing with Web UI"
 readme = "README.md"
 license = {text = "MIT"}
